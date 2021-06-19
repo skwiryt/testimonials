@@ -25,7 +25,7 @@ router.route('/concerts').post((req, res) => {
     res.json({message: 'OK'});
     // res.json(db.concerts);
   } else {
-    res.json({message: 'ERROR. All fields are required'});
+    res.status(400).json({message: 'ERROR. All fields are required'});
   }
   
 
@@ -38,7 +38,7 @@ router.route('/concerts/:id').put((req, res) => {
     res.json({message: 'OK'});
     // res.json(db.concerts);
   } else {
-    res.json({message: 'ERROR. All fields are required'});
+    res.status(400).json({message: 'ERROR. All fields are required'});
   }
 });
 router.route('/concerts/:id').delete((req, res) => {

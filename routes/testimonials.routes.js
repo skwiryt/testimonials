@@ -25,7 +25,7 @@ router.route('/testimonials').post((req, res) => {
     res.json({message: 'OK'});
     // res.json(db.testimonials);
   } else {
-    res.json({message: 'ERROR. All fields are required'});
+    res.status(400).json({message: 'ERROR. All fields are required'});
   }
 });
 router.route('/testimonials/:id').put((req, res) => {
@@ -36,7 +36,7 @@ router.route('/testimonials/:id').put((req, res) => {
     res.json({message: 'OK'});
     // res.json(db.testimonials);
   } else {
-    res.json({message: 'ERROR. All fields are required'});
+    res.status(400).json({message: 'ERROR. All fields are required'});
   }
 });
 router.route('/testimonials/:id').delete((req, res) => {
