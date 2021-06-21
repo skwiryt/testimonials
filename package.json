@@ -5,7 +5,8 @@
   "author": "MB",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server"
+    "start": "nodemon server",
+    "build": "cd client/NewWaveFest && yarn install && yarn build"
   },
   "dependencies": {
     "cors": "^2.8.5",
