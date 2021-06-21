@@ -20,10 +20,13 @@ router.route('/seats/:id').get((req, res) => {
 router.route('/seats').post((req, res) => {
   const id = uuidv4();
   const {day, seat, client, email} = req.body;
-  if (day && seat && client && email) {
+  const reservation = db.seats.some(r => r.day == day && r.seat == seat);
+  if (day && seat && client && email && !reservation) {
     db.seats.push({ id, day, seat, client, email })
     res.json({message: 'OK'});
     // res.json(db.seats);
+  } else if (reservation) {
+    res.status(409).json({message: 'The slot is already taken...'});
   } else {
     res.status(400).json({message: 'ERROR. All fields are required'});
   }
