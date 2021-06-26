@@ -1,4 +1,5 @@
 const express = require('express');
+const socket = require('socket.io');
 const path = require('path');
 const testimonialsRoutes = require('./routes/testimonials.routes');
 const concertsRoutes = require('./routes/concerts.routes');
@@ -22,9 +23,27 @@ app.use(cors({
 }));
 */
 
+const server = app.listen(process.env.PORT || 8000);
+
+const io = socket(server, 
+  {
+    cors: {
+      origin: '*',
+    }
+  });
+io.on('connection', (socket) => {
+  console.log('New connection');
+});
+app.use((req, res, next) => {
+  res.io = io;
+  next();
+})
+
+
 app.use('/api', testimonialsRoutes);
 app.use('/api', concertsRoutes);
 app.use('/api', seatsRoutes);
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/NewWaveFest/build/index.html'));
@@ -33,4 +52,4 @@ app.get('*', (req, res) => {
 app.use((req, res) => {
   res.json({message: 'Not found'});
 })
-app.listen(process.env.PORT || 8000);
+

@@ -24,6 +24,7 @@ router.route('/seats').post((req, res) => {
   if (day && seat && client && email && !reservation) {
     db.seats.push({ id, day, seat, client, email })
     res.json({message: 'OK'});
+    res.io.emit('seatBooked', db.seats);
     // res.json(db.seats);
   } else if (reservation) {
     res.status(409).json({message: 'The slot is already taken...'});
