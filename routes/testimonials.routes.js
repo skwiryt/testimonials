@@ -1,49 +1,90 @@
 const express = require('express');
 const router = express.Router();
-const { db } = require('../db');
-const { v4: uuidv4 } = require('uuid')
+const Testimonial = require('../models/testimonial.model');
 
-
-router.route('/testimonials').get((req, res) => {
-  res.json(db.testimonials);
-});
-
-router.route('/testimonials/random').get((req, res) => {
-  const randomIndex = Math.floor(Math.random() * db.testimonials.length);
-  res.json(db.testimonials[randomIndex]);
-});
-
-router.route('/testimonials/:id').get((req, res) => {
-  res.json(db.testimonials.find(el => el.id == req.params.id));
-});
-
-router.route('/testimonials').post((req, res) => {
-  const id = uuidv4();
-  const {author, text} = req.body;
-  if (author && text) {
-    db.testimonials.push({ id, author, text })
-    res.json({message: 'OK'});
-    // res.json(db.testimonials);
-  } else {
-    res.status(400).json({message: 'ERROR. All fields are required'});
+router.route('/testimonials').get(async (req, res) => {
+  try {
+    res.json(await Testimonial.find());
+  } catch(err) {
+    res.status(500).json({message: err})
   }
 });
-router.route('/testimonials/:id').put((req, res) => {
-  let index = db.testimonials.findIndex(el => el.id == req.params.id);
-  const {author, text} = req.body;
-  if (author && text) {
-    db.testimonials[index] = {id: req.params.id, author, text};
-    res.json({message: 'OK'});
-    // res.json(db.testimonials);
-  } else {
-    res.status(400).json({message: 'ERROR. All fields are required'});
+
+router.route('/testimonials/random').get(async (req, res) => {
+  try {
+    const size = await Testimonial.countDocuments();
+    const random = Math.floor(Math.random() * size);
+    const testimonial = await Testimonial.findOne().skip(random);
+    if (!testimonial) {
+      res.status(404).json({message: 'Not found'});
+    } else {
+      res.json(testimonial);
+    }    
+  } catch(err) {
+    res.status(500).json({message: err})
   }
 });
-router.route('/testimonials/:id').delete((req, res) => {
-  let index = db.testimonials.findIndex(el => el.id == req.params.id);
-  db.testimonials.splice(index, 1)
-  res.json({message: 'OK'});
-  // res.json(db.testimonials);
+
+router.route('/testimonials/:id').get(async (req, res) => {
+  try {
+    const testimonial = await Testimonial.findById(req.params.id);
+    if (!testimonial) {
+      res.status(404).json({message: 'Not found'});
+    } else {
+      res.json(testimonial);
+    }
+  } catch(err) {
+    res.status(500).json({message: err})
+  }
+});
+
+router.route('/testimonials').post(async (req, res) => {
+  let {author, text} = req.body;  
+  if (author && text) {
+    try {
+      let newTestimonial = new Testimonial({author, text});
+      newTestimonial = await newTestimonial.save();
+      res.json(newTestimonial);
+    } catch(err) {
+      res.status(500).json({message: err});
+    }
+  } else {
+    res.status(400).json({message: 'ERROR. All fields are required and correct'});
+  }
+});
+router.route('/testimonials/:id').put(async (req, res) => {
+  let {author, text} = req.body; 
+  if (author && text) {
+    try {
+      let testimonial = await Testimonial.findById(req.params.id);
+      if(!testimonial) {
+        res.status(404).json({message: 'Not found'});
+      } else {
+        testimonial.author = author;
+        testimonial.text = text;
+        
+        testimonial = await testimonial.save();        
+        res.json(testimonial);
+      }    
+    } catch(err) {
+      res.status(500).json({message: err});
+    }    
+  } else {
+    res.status(400).json({message: 'ERROR. All fields are required and correct'});
+  }
+});
+router.route('/testimonials/:id').delete(async (req, res) => {  
+  try {
+    let testimonial = await Testimonial.findById(req.params.id);
+    if(!testimonial) {
+      res.status(404).json({message: 'Not found'});
+    } else {      
+      await Testimonial.deleteOne({_id: req.params.id});
+      res.json(testimonial);
+    }    
+  } catch(err) {
+    res.status(500).json({message: err});
+  }    
 })
 
 
