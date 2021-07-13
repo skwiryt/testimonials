@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Alert, Container } from 'reactstrap';
+import Lineup from '../../features/Lineup/LineupContainer';
+import PriceInfos from '../../features/PriceInfos/PriceInfos';
 
 const Prices = () => (
   <Container>
@@ -11,6 +13,15 @@ const Prices = () => (
         Attention! <strong>Children under 4 can go freely with you without any other fee!</strong>
     </Alert>
 
+    <Lineup>
+      <PriceInfos/>
+    </Lineup>
+
+  </Container>
+);
+
+/*
+
     <h2>Day one</h2>
     <p>Price: 25$</p>
     <p>Workshops: "Rock Music Style", "How to make you voice grooowl", "Make your voice stronger", "History of Rock"</p>
@@ -20,7 +31,6 @@ const Prices = () => (
     <h2>Day three</h2>
     <p>Price: 50$</p>
     <p>Workshops: "Increase your vocal range", "How to properly warmup before singing", "It's time for YOU!"</p>
-  </Container>
-);
+*/
 
 export default Prices;
