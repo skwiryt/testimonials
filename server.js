@@ -56,7 +56,7 @@ app.use((req, res) => {
   res.json({message: 'Not found'});
 });
 
-const devDBString = 'mongodb+srv://skwiryt:Qwinto123@cluster0.zkoct.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const devDBString = process.env.WaveDbString;
 const testDBString = 'mongodb://localhost:27017/newWaveDB';
 const dbURI = process.env.NODE_ENV === 'test' ? testDBString : devDBString; 
 // connects our backend code with the database
