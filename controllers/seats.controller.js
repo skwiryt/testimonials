@@ -1,4 +1,5 @@
 const Seat = require('../models/seat.model');
+const sanitize = require('mongo-sanitize');
 
 exports.getAll = async (req, res) => {  
   try {
@@ -86,7 +87,9 @@ exports.edit = async (req, res) => {
 
 exports.delete = async (req, res) => {
   try {
-    let seat = await Seat.findById(req.params.id);
+    const safeId = sanitize(req.params.id)
+    //let seat = await Seat.findById(req.params.id);
+    let seat = await Seat.findById(safeId);
     if(!seat) {
       res.status(404).json({message: 'Not found'});
     } else {      

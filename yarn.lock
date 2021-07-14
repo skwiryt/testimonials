@@ -772,6 +772,11 @@ he@1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+helmet@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/helmet/-/helmet-4.6.0.tgz#579971196ba93c5978eb019e4e8ec0e50076b4df"
+  integrity sha512-HVqALKZlR95ROkrnesdhbbZJFi/rIVSoNq6f3jA/9u6MIbTsPh3xZwihjeI5+DO/2sOV6HMHooXcEOuwskHpTg==
+
 http-errors@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.7.2.tgz#4f5029cf13239f31036e5b2e55292bcfbcc85c8f"
@@ -1040,6 +1045,11 @@ mocha@^9.0.2:
     yargs "16.2.0"
     yargs-parser "20.2.4"
     yargs-unparser "2.0.0"
+
+mongo-sanitize@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mongo-sanitize/-/mongo-sanitize-1.0.1.tgz#23fb7eb33a97bbfc8219e6f41a889a4b96c4a850"
+  integrity sha512-y18QHyoQomBPdv48F0pJfBByZXql056fcj+5cPZt9MbpR+d1kKaGYQ3tiKE3bZLWDHBuMr5djhlxGO0vEMp2/A==
 
 mongodb-memory-server-core@7.2.0:
   version "7.2.0"
