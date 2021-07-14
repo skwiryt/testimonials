@@ -60,9 +60,9 @@ const devDBString = process.env.WaveDbString;
 const testDBString = 'mongodb://localhost:27017/newWaveDB';
 const dbURI = process.env.NODE_ENV === 'test' ? testDBString : devDBString; 
 // connects our backend code with the database
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 // mongoose.connect('mongodb://localhost:27017/newWaveDB', { useNewUrlParser: true, useUnifiedTopology: true });
-// mongoose.connect('mongodb+srv://skwiryt:Qwinto123@cluster0.zkoct.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://skwiryt:Qwinto123@cluster0.zkoct.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
